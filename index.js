@@ -122,7 +122,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
     var intentMap = new Map();
-    intentMap.set("agenda", clinicaluminas);
+    intentMap.set("agendar", clinicaluminas);
     agent.handleRequest(intentMap);
   });
 
