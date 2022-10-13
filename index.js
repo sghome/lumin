@@ -68,7 +68,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-  function clinicaluminas(agent){
+  function makeAppointment(agent){
 
     let cita_type = agent.parameters.TipoCita;
     let date = agent.parameters.date;
@@ -122,7 +122,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
     var intentMap = new Map();
-    intentMap.set("agendar", clinicaluminas);
+    intentMap.set("agendar", makeAppointment);
     agent.handleRequest(intentMap);
   });
 
