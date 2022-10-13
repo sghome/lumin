@@ -1,0 +1,22 @@
+{
+  "name": "Luminas",
+  "version": "1.0.0",
+  "description": "Luminas Bot",
+  "main": "index.js",
+  
+  "scripts": {
+    "start": "node index.js"
+  },
+  
+  
+  "author": "Sergio Gonzalez",
+  
+  
+  "dependencies": {
+    "actions-on-google": "^2.13.0",
+    "dialogflow-fulfillment": "^0.6.1",
+    "express": "^4.17.1",
+    "googleapis": "^67.0.0",
+    "nodemon": "^2.0.2"
+  }
+}
