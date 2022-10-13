@@ -48,7 +48,7 @@ const calendar = google.calendar("v3");
 process.env.DEBUG = "dialogflow:*"; // enables lib debugging statements
 
 const timeZone = "America/Buenos_Aires";
-const timeZoneOffset = "03:00";
+const timeZoneOffset = "-03:00";
 
 
 
@@ -89,7 +89,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 ////////////////////
 
 
- const citaTimeString = dateTimeStart.toLocaleString("en-US", {
+ const citaTimeString = dateTimeStart.toLocaleString("sp-ES", {
         month: "long",
         day: "numeric",
         hour: "numeric",
