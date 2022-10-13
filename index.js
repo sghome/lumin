@@ -26,19 +26,12 @@ const serviceAccount = {
 
 
 
-
-
-
 // Set up Google Calendar Service account credentials
 const serviceAccountAuth = new google.auth.JWT({
   email: serviceAccount.client_email,
   key: serviceAccount.private_key,
   scopes: "https://www.googleapis.com/auth/calendar",
 });
-
-
-
-
 
 
 
@@ -70,7 +63,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
   function makeAppointment(agent){
 
-    let cita_type = agent.parameters.TipoCita;
+    let appointment_type = agent.parameters.TipoCita;
     let date = agent.parameters.date;
     let time = agent.parameters.time;
 
@@ -103,7 +96,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, cita_type)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type)
         .then(calendarResponse => {
           agent.add(
             `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
@@ -129,7 +122,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, cita_type) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
@@ -150,8 +143,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, cita_type) {
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: cita_type + ` Agendado `,
-                description: cita_type,
+                summary: appointment_type + ` Agendado `,
+                description: appointment_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
