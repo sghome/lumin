@@ -47,8 +47,8 @@ const serviceAccountAuth = new google.auth.JWT({
 const calendar = google.calendar("v3");
 process.env.DEBUG = "dialogflow:*"; // enables lib debugging statements
 
-const timeZone = "America/New_York";
-const timeZoneOffset = "-04:00";
+const timeZone = "America/Buenos_Aires";
+const timeZoneOffset = "03:00";
 
 
 
@@ -68,9 +68,9 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-  function makeAppointment(agent){
+  function clinicaluminas(agent){
 
-    let appointment_type = agent.parameters.AppointmentType;
+    let TipoCita = agent.parameters.TipoCita;
     let date = agent.parameters.date;
     let time = agent.parameters.time;
 
@@ -89,7 +89,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 ////////////////////
 
 
- const appointmentTimeString = dateTimeStart.toLocaleString("en-US", {
+ const citaTimeString = dateTimeStart.toLocaleString("en-US", {
         month: "long",
         day: "numeric",
         hour: "numeric",
@@ -103,10 +103,10 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, TipoCita)
         .then(calendarResponse => {
           agent.add(
-            `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
+            `Ok, dejame reviso. ${citaTimeString} esta bien!.`
           );
         })
 
@@ -114,7 +114,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
         .catch(err => {
           agent.add(
-            `Lo siento, no hay horarios disponibles ${appointmentTimeString}.`);
+            `Lo siento, no hay horarios disponibles ${citaTimeString}.`);
         })
     }
 
@@ -122,14 +122,14 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
     var intentMap = new Map();
-    intentMap.set("ScheduleAppointment", makeAppointment);
+    intentMap.set("agenda", clinicaluminas);
     agent.handleRequest(intentMap);
   });
 
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, TipoCita) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
@@ -150,8 +150,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: appointment_type + ` Agendado `,
-                description: appointment_type,
+                summary: TipoCita + ` Agendado `,
+                description: TipoCita,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
