@@ -70,7 +70,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
   function clinicaluminas(agent){
 
-    let TipoCita = agent.parameters.TipoCita;
+    let cita_type = agent.parameters.TipoCita;
     let date = agent.parameters.date;
     let time = agent.parameters.time;
 
@@ -89,7 +89,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 ////////////////////
 
 
- const citaTimeString = dateTimeStart.toLocaleString("sp-ES", {
+ const appointmentTimeString = dateTimeStart.toLocaleString("sp-ES", {
         month: "long",
         day: "numeric",
         hour: "numeric",
@@ -103,10 +103,10 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, TipoCita)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, cita_type)
         .then(calendarResponse => {
           agent.add(
-            `Ok, dejame reviso. ${citaTimeString} esta bien!.`
+            `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
           );
         })
 
@@ -114,7 +114,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
         .catch(err => {
           agent.add(
-            `Lo siento, no hay horarios disponibles ${citaTimeString}.`);
+            `Lo siento, no hay horarios disponibles ${appointmentTimeString}.`);
         })
     }
 
@@ -129,7 +129,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, TipoCita) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, cita_type) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
@@ -150,8 +150,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, TipoCita) {
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: TipoCita + ` Agendado `,
-                description: TipoCita,
+                summary: cita_type + ` Agendado `,
+                description: cita_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
