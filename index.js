@@ -89,7 +89,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 ////////////////////
 
 
- const appointmentTimeString = dateTimeStart.toLocaleString("sp-ES", {
+ const appointmentTimeString = dateTimeStart.toLocaleString("es-ES", {
         month: "long",
         day: "numeric",
         hour: "numeric",
