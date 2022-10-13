@@ -1,6 +1,6 @@
 {
   "name": "WebhookLuminas",
   "description": "Webhook",
-  "repository": "https://github.com/sghome/botluminas.git",
+  "repository": "https://github.com/sghome/lumin.git",
   "keywords": ["api.ai", "dialogflow", "natural language"]
 }
