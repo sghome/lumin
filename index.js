@@ -64,9 +64,9 @@ app.post("/webhook", express.json(), (request, response) =>{
   function makeAppointment(agent){
 
     let appointment_type = agent.parameters.TipoCita;
-    let id_type = agent.parameters.ID;
-    let nombre_type = agent.parameters.Nombre;
-    let phone_type = agent.parameters.Phone;
+
+    let nombre_type = agent.parameters.person;
+    let phone_type = agent.parameters.number;
     
     let date = agent.parameters.date;
     let time = agent.parameters.time;
@@ -99,7 +99,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, id_type, nombre_type, phone_type)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombre_type, phone_type)
         .then(calendarResponse => {
           agent.add(
             `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
@@ -125,7 +125,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, id_type, nombre_type, phone_type) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombre_type, phone_type) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
@@ -146,8 +146,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, id_ty
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: appointment_type, ID_type, Nombre_type, Phone_type + ` Agendado `,
-                description: appointment_type, id_type, nombre_type, phone_type,
+                summary: appointment_type, nombre_type, phone_type + ` Agendado `,
+                description: appointment_type, nombre_type, phone_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
