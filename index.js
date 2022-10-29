@@ -99,7 +99,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, ID, Nombre, Phone)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, ID_type, Nombre_type, Phone_type)
         .then(calendarResponse => {
           agent.add(
             `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
@@ -125,7 +125,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, ID, Nombre, Phone) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, ID_type, Nombre_type, Phone_type) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
