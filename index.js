@@ -64,9 +64,9 @@ app.post("/webhook", express.json(), (request, response) =>{
   function makeAppointment(agent){
 
     let appointment_type = agent.parameters.TipoCita;
-    let ID = agent.parameters.ID;
-    let Nombre = agent.parameters.Nombre;
-    let Phone = agent.parameters.Phone;
+    let ID_type = agent.parameters.ID;
+    let Nombre_type = agent.parameters.Nombre;
+    let Phone_type = agent.parameters.Phone;
     
     let date = agent.parameters.date;
     let time = agent.parameters.time;
@@ -146,8 +146,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, ID, N
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: appointment_type, ID, Nombre, Phone + ` Agendado `,
-                description: appointment_type, ID, Nombre, Phone,
+                summary: appointment_type, ID_type, Nombre_type, Phone_type + ` Agendado `,
+                description: appointment_type, ID_type, Nombre_type, Phone_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
