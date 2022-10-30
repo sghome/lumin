@@ -23,6 +23,10 @@ const serviceAccount = {
 }; 
 
 
+/////////////////////////SENDGRID INTEGRATION///////////////
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey("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")
+///////////////////////////////////////////////////////////
 
 
 
@@ -70,8 +74,29 @@ app.post("/webhook", express.json(), (request, response) =>{
     
     let date = agent.parameters.date;
     let time = agent.parameters.time;
+    let email = agent.parameters.email;
+    
 
 
+    
+    
+    ///////////////////// SENDGRID INTEGRATION ///////////////////
+    
+    const msg = {
+  to: 'email', // Change to your recipient
+  from: 'sergio.almagua@gmail.com', // Change to your verified sender
+  subject: 'Sending with SendGrid is Fun',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+                 };
+sgMail.send(msg);
+    
+    //////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    
 
 
     let dateTimeStart = new Date(Date.parse(date.split("T")[0] +
