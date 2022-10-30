@@ -85,9 +85,12 @@ app.post("/webhook", express.json(), (request, response) =>{
     const msg = {
   to: 'email', // Change to your recipient
   from: 'sergio.almagua@gmail.com', // Change to your verified sender
+     
   subject: 'Sending with SendGrid is Fun',
   text: 'and easy to do anywhere, even with Node.js',
   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+       TemplateId: 'd-58011155cca54d5a8f6a8cd4f5f50807',
+      dynamic_template_data:{nombre_type, phone_type, date, time}
                  };
 sgMail.send(msg);
     
