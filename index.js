@@ -3,6 +3,8 @@ const app = express();
 const df = require("dialogflow-fulfillment");
 const { google } = require("googleapis");
 
+const sgMail = require('@sendgrid/mail')
+
 const PORT = process.env.PORT || 3000 ;
 
 
@@ -24,7 +26,7 @@ const serviceAccount = {
 
 
 /////////////////////////SENDGRID INTEGRATION///////////////
-const sgMail = require('@sendgrid/mail')
+
 sgMail.setApiKey("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")
 ///////////////////////////////////////////////////////////
 
@@ -86,9 +88,9 @@ app.post("/webhook", express.json(), (request, response) =>{
   to: 'email', // Change to your recipient
   from: 'sergio.almagua@gmail.com', // Change to your verified sender
      
-  subject: 'Sending with SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
-  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+  subject: 'Confirmacion de cita Luminas',
+  text: 'Tu cita ya esta programada, puedes verla en el siguiente link: https://calendar.google.com/calendar/u/0/embed?src=bf9dd9c84326d50e516f46a33fb177ec6076e19bcc928566d8a07c7f81f85633@group.calendar.google.com&ctz=America/New_York',
+  html: '<strong>si necesitas màs informaciòn puedes llamarnos al siguiente numero: 300-288-3054</strong>',
        TemplateId: 'd-58011155cca54d5a8f6a8cd4f5f50807',
       dynamic_template_data:{nombre_type, phone_type, date, time}
                  };
@@ -174,7 +176,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombr
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: appointment_type, nombre_type, phone_type + ` Agendado `,
+                summary: appointment_type + ` Agendado `,
                 description: appointment_type, nombre_type, phone_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
@@ -186,4 +188,3 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombr
       });
   });
 }
-
