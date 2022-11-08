@@ -26,8 +26,8 @@ const serviceAccount = {
 
 
 /////////////////////////SENDGRID INTEGRATION///////////////
-const sgMail = require('@sendgrid/mail');
-process.env.SENDGRID_API_KEY = "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";
+const sgMail = require('@sendgrid/mail')
+process.env.SENDGRID_API_KEY = "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"
 ///////////////////////////////////////////////////////////
 
 
