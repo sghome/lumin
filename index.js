@@ -98,10 +98,10 @@ app.post("/webhook", express.json(), (request, response) =>{
   subject: 'Confirmacion de cita Luminas',
   text: 'Tu cita ya esta programada, puedes verla en el siguiente link: https://calendar.google.com/calendar/u/0/embed?src=bf9dd9c84326d50e516f46a33fb177ec6076e19bcc928566d8a07c7f81f85633@group.calendar.google.com&ctz=America/New_York',
   html: '<strong>si necesitas màs informaciòn puedes llamarnos al siguiente numero: 300-288-3054</strong>',
-       TemplateId: 'd-58011155cca54d5a8f6a8cd4f5f50807',
-      dynamic_template_data:{person, number, date, time}
-                 };
-sgMail.send(msg);
+  };
+
+      console.log(msg);
+      sgMail.send(msg);
       
     }
     
