@@ -92,7 +92,7 @@ app.post("/webhook", express.json(), (request, response) =>{
   text: 'Tu cita ya esta programada, puedes verla en el siguiente link: https://calendar.google.com/calendar/u/0/embed?src=bf9dd9c84326d50e516f46a33fb177ec6076e19bcc928566d8a07c7f81f85633@group.calendar.google.com&ctz=America/New_York',
   html: '<strong>si necesitas màs informaciòn puedes llamarnos al siguiente numero: 300-288-3054</strong>',
        TemplateId: 'd-58011155cca54d5a8f6a8cd4f5f50807',
-      dynamic_template_data:{nombre_type, phone_type, date, time}
+      dynamic_template_data:{person, number, date, time}
                  };
 sgMail.send(msg);
     
@@ -129,7 +129,7 @@ sgMail.send(msg);
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombre_type, phone_type)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, person, number)
         .then(calendarResponse => {
           agent.add(
             `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
@@ -155,7 +155,7 @@ sgMail.send(msg);
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombre_type, phone_type) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, person, number) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
@@ -176,8 +176,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombr
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: nombre_type + appointment_type + ` Agendado `,
-                description: appointment_type, nombre_type, phone_type,
+                summary: person + appointment_type + ` Agendado `,
+                description: appointment_type, person, number,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
