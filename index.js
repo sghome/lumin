@@ -26,8 +26,8 @@ const serviceAccount = {
 
 
 /////////////////////////SENDGRID INTEGRATION///////////////
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey("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");
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey("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")
 ///////////////////////////////////////////////////////////
 
 
@@ -73,10 +73,11 @@ app.post("/webhook", express.json(), (request, response) =>{
 
     let person = agent.parameters.["person"];
     let number = agent.parameters.["number"];
+    let email = agent.parameters.["email"];
     
     let date = agent.parameters.date;
     let time = agent.parameters.time;
-    let email = agent.parameters.["email"];
+    
     
 
 
@@ -176,7 +177,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, perso
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: person + appointment_type + ` Agendado `,
+                summary: appointment_type + ` Agendado `,
                 description: appointment_type, person, number,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
