@@ -27,7 +27,7 @@ const serviceAccount = {
 
 /////////////////////////SENDGRID INTEGRATION///////////////
 const sgMail = require('@sendgrid/mail');
-process.env.SENDGRID_API_KEY = "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";
+
 ///////////////////////////////////////////////////////////
 
 
@@ -87,7 +87,7 @@ app.post("/webhook", express.json(), (request, response) =>{
     
     ///////////////////// SENDGRID INTEGRATION ///////////////////
     function SendEmail(agent) {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.setApiKey("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");
       
       
       const emailParam = agent.parameters.email;
