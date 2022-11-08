@@ -71,12 +71,12 @@ app.post("/webhook", express.json(), (request, response) =>{
 
     let appointment_type = agent.parameters.TipoCita;
 
-    let nombre_type = agent.parameters.sys.person;
-    let phone_type = agent.parameters.sys.number;
+    let person = agent.parameters.["person"];
+    let number = agent.parameters.["number"];
     
-    let date = agent.parameters.sys.date;
-    let time = agent.parameters.sys.time;
-    let email = agent.parameters.sys.email;
+    let date = agent.parameters.date;
+    let time = agent.parameters.time;
+    let email = agent.parameters.["email"];
     
 
 
