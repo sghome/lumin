@@ -74,9 +74,9 @@ app.post("/webhook", express.json(), (request, response) =>{
     let time = agent.parameters.time;
     
     
-    let person = agent.parameters.person;
-    let number = agent.parameters.number;
-    let email = agent.parameters.email;
+    let person = agent.parameters.["person"];
+    let number = agent.parameters.["number"];
+    let email = agent.parameters.["email"];
     
 
     
@@ -90,7 +90,7 @@ app.post("/webhook", express.json(), (request, response) =>{
     sgMail.setApiKey("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");
       
       
-      const emailParam = agent.parameters.email;
+      const emailParam = agent.parameters.["email"];
       
       
       const msg = {
