@@ -3,7 +3,7 @@ const app = express();
 const df = require("dialogflow-fulfillment");
 const { google } = require("googleapis");
 
-const sgMail = require('@sendgrid/mail')
+
 
 const PORT = process.env.PORT || 3000 ;
 
@@ -26,8 +26,8 @@ const serviceAccount = {
 
 
 /////////////////////////SENDGRID INTEGRATION///////////////
-
-sgMail.setApiKey("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")
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");
 ///////////////////////////////////////////////////////////
 
 
@@ -71,12 +71,12 @@ app.post("/webhook", express.json(), (request, response) =>{
 
     let appointment_type = agent.parameters.TipoCita;
 
-    let nombre_type = agent.parameters.person;
-    let phone_type = agent.parameters.number;
+    let nombre_type = agent.parameters.sys.person;
+    let phone_type = agent.parameters.sys.number;
     
-    let date = agent.parameters.date;
-    let time = agent.parameters.time;
-    let email = agent.parameters.email;
+    let date = agent.parameters.sys.date;
+    let time = agent.parameters.sys.time;
+    let email = agent.parameters.sys.email;
     
 
 
@@ -176,7 +176,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, nombr
               auth: serviceAccountAuth,
               calendarId: calendarId,
               resource: {
-                summary: appointment_type + ` Agendado `,
+                summary: nombre_type + appointment_type + ` Agendado `,
                 description: appointment_type, nombre_type, phone_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
