@@ -26,8 +26,8 @@ const serviceAccount = {
 
 
 /////////////////////////SENDGRID INTEGRATION///////////////
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey("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")
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");
 ///////////////////////////////////////////////////////////
 
 
@@ -84,9 +84,13 @@ app.post("/webhook", express.json(), (request, response) =>{
     
     
     ///////////////////// SENDGRID INTEGRATION ///////////////////
-    
-    const msg = {
-  to: 'email', // Change to your recipient
+    function SendEmail(agent) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const emailParam = agent.parameters.email;
+      
+      
+      const msg = {
+  to: emailParam, // Change to your recipient
   from: 'sergio.almagua@gmail.com', // Change to your verified sender
      
   subject: 'Confirmacion de cita Luminas',
@@ -96,6 +100,11 @@ app.post("/webhook", express.json(), (request, response) =>{
       dynamic_template_data:{person, number, date, time}
                  };
 sgMail.send(msg);
+      
+    }
+    
+    
+    
     
     //////////////////////////////////////////////////////////////
     
@@ -150,7 +159,9 @@ sgMail.send(msg);
 
     var intentMap = new Map();
     intentMap.set("agendar", makeAppointment);
+  intentMap.set("email", SendEmail);
     agent.handleRequest(intentMap);
+  
   });
 
 
