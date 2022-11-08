@@ -98,8 +98,8 @@ app.post("/webhook", express.json(), (request, response) =>{
   from: 'sergio.almagua@gmail.com', // Change to your verified sender
      
   subject: 'Confirmacion de cita Luminas',
-  text: 'Tu cita ya esta programada, puedes verla en el siguiente link: https://calendar.google.com/calendar/u/0/embed?src=bf9dd9c84326d50e516f46a33fb177ec6076e19bcc928566d8a07c7f81f85633@group.calendar.google.com&ctz=America/New_York',
-  html: '<strong>si necesitas màs informaciòn puedes llamarnos al siguiente numero: 300-288-3054</strong>',
+  text: 'Tu cita ya esta programada, puedes verla en el calendario de Luminas',
+  html: '<strong> Si necesitas màs informaciòn puedes llamarnos al siguiente numero: 300-288-3054 </strong>',
   };
 
       console.log(msg);
@@ -143,7 +143,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
  // Check the availibility of the time, and make an appointment if there is time on the calendar
-      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, person, number)
+      return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type)
         .then(calendarResponse => {
           agent.add(
             `Ok, dejame reviso. ${appointmentTimeString} esta bien!.`
@@ -163,7 +163,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
     var intentMap = new Map();
     intentMap.set("agendar", makeAppointment);
-    intentMap.set("email", SendEmail);
+    intentMap.set(["email"], SendEmail);
     
     agent.handleRequest(intentMap);
   
@@ -172,7 +172,7 @@ app.post("/webhook", express.json(), (request, response) =>{
 
 
 
-function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, person, number) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
   return new Promise((resolve, reject) => {
     calendar.events.list({
 
@@ -194,7 +194,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, perso
               calendarId: calendarId,
               resource: {
                 summary: appointment_type + ` Agendado `,
-                description: appointment_type, person, number,
+                description: appointment_type,
                 start: { dateTime: dateTimeStart },
                 end: { dateTime: dateTimeEnd }
               }
