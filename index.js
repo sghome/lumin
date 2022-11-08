@@ -70,13 +70,15 @@ app.post("/webhook", express.json(), (request, response) =>{
   function makeAppointment(agent){
 
     let appointment_type = agent.parameters.TipoCita;
-
-    let person = agent.parameters.["person"];
-    let number = agent.parameters.["number"];
-    let email = agent.parameters.["email"];
-    
     let date = agent.parameters.date;
     let time = agent.parameters.time;
+    
+    
+    let person = agent.parameters.person;
+    let number = agent.parameters.number;
+    let email = agent.parameters.email;
+    
+
     
     
 
@@ -88,7 +90,7 @@ app.post("/webhook", express.json(), (request, response) =>{
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
       
       
-      const emailParam = agent.parameters.["email"];
+      const emailParam = agent.parameters.email;
       
       
       const msg = {
@@ -161,7 +163,8 @@ app.post("/webhook", express.json(), (request, response) =>{
 
     var intentMap = new Map();
     intentMap.set("agendar", makeAppointment);
-  intentMap.set("email", SendEmail);
+    intentMap.set("email", SendEmail);
+    
     agent.handleRequest(intentMap);
   
   });
