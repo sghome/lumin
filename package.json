@@ -17,7 +17,7 @@
     "dialogflow-fulfillment": "^0.6.1",
     "express": "^4.17.1",
     "googleapis": "^67.0.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^3.0.0",
     "@sendgrid/mail": "^7.4.0"
   }
 }
